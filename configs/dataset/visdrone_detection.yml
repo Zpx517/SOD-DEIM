@@ -1,0 +1,58 @@
+task: detection
+
+evaluator:
+  type: CocoEvaluator
+  iou_types: ['bbox', ]
+
+num_classes: 1 # your dataset classes
+remap_mscoco_category: False
+
+train_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: E:\zpx\DEIM_1202\datasets\CORS-ADD\images\train2017
+    ann_file: E:\zpx\DEIM_1202\datasets\CORS-ADD\coco\train.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: True
+  num_workers: 4
+  drop_last: True
+  collate_fn:
+    type: BatchImageCollateFunction
+
+
+val_dataloader:
+  type: DataLoader
+  dataset:
+    type: CocoDetection
+    img_folder: E:\zpx\DEIM_1202\datasets\CORS-ADD\images\val2017
+    ann_file: E:\zpx\DEIM_1202\datasets\CORS-ADD\coco\val.json
+    return_masks: False
+    transforms:
+      type: Compose
+      ops: ~
+  shuffle: False
+  num_workers: 4
+  drop_last: False
+  collate_fn:
+    type: BatchImageCollateFunction
+
+##验证测试集
+#val_dataloader:
+#  type: DataLoader
+#  dataset:
+#    type: CocoDetection
+#    img_folder: E:\zpx\DEIM_1202\datasets\plane\images\test
+#    ann_file: E:\zpx\DEIM_1202\datasets\plane\coco\test.json
+#    return_masks: False
+#    transforms:
+#      type: Compose
+#      ops: ~
+#  shuffle: False
+#  num_workers: 4
+#  drop_last: False
+#  collate_fn:
+#    type: BatchImageCollateFunction
